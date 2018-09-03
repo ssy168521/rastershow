@@ -3,14 +3,10 @@
  */
 /*global define*/
 define([
-    'Cesium/Core/defined',
-    'Cesium/Core/defineProperties',
-    'Cesium/Core/DeveloperError',
-    'cesiumQueryControl'
+    '../../lib/Cesium-1.4.8/Cesium',
+    './cesiumQueryControl'
 ], function(
-    defined,
-    defineProperties,
-    DeveloperError,
+	Cesium,
     cesiumQueryControl) {
     'use strict';
 
@@ -32,8 +28,8 @@ define([
      * viewer.extend(viewerCesiumNavigationMixin);
      */
     function viewerCesiumQueryMixin(viewer, options) {
-        if (!defined(viewer)) {
-            throw new DeveloperError('viewer is required.');
+        if (!Cesium.defined(viewer)) {
+            throw new Cesium.DeveloperError('viewer is required.');
         }
 
         var cesiumQueryControl = init(viewer, options);
@@ -44,7 +40,7 @@ define([
             };
         })(viewer));
 
-        defineProperties(viewer, {
+        Cesium.defineProperties(viewer, {
         	cesiumQueryControl: {
                 configurable: true,
                 get: function () {

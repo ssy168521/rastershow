@@ -2,17 +2,9 @@
  * 
  */
 define('sasmacQueryControl',[
-	'Cesium/Core/defined',
-    'Cesium/Core/defineProperties',
-//    'Cesium/Core/defaultValue',
-    'Cesium/Core/Event',
-    'Knockout'   
+	 './lib/Cesium-1.4.8/Cesium',
 ], function (
-        defined,
-        defineProperties,
-//    defaultValue,
-        CesiumEvent,
-        Knockout 
+        CesiumEvent
        )
         {
   

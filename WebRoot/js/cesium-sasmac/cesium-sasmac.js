@@ -2,19 +2,11 @@
  * 
  */
 define('sasmactools',[
-	'Cesium/Core/defined',
-    'Cesium/Core/defineProperties',
-//    'Cesium/Core/defaultValue',
-    'Cesium/Core/Event',
-    'Knockout',
-    'Core/registerKnockoutBindings'
+	'Cesium',
+    'Knockout'   
 ], function (
-        defined,
-        defineProperties,
-//    defaultValue,
-        CesiumEvent,
-        Knockout,
-        registerKnockoutBindings
+        Cesium,
+        Knockout
        )
         {
 	  'use strict';
@@ -42,12 +34,12 @@ define('sasmactools',[
 	    sasmactools.prototype.destroy = function ()
 	    {
 
-	        if (defined(this.QueryControlViewModel))
+	        if (Cesium.defined(this.QueryControlViewModel))
 	        {
 	            this.QueryControlViewModel.destroy();
 	        }
 
-	        if (defined(this.container))
+	        if (Cesium.defined(this.container))
 	        {
 	            this.container.parentNode.removeChild(this.container);
 	        }
@@ -72,16 +64,16 @@ define('sasmactools',[
 	     * @param options
 	     */
 	    function initialize(viewerCesiumWidget, options) {
-	        if (!defined(viewerCesiumWidget)) {
+	        if (!Cesium.defined(viewerCesiumWidget)) {
 	            throw new DeveloperError('CesiumWidget or Viewer is required.');
 	        }
 
 //	        options = defaultValue(options, defaultValue.EMPTY_OBJECT);
 
-	        var cesiumWidget = defined(viewerCesiumWidget.cesiumWidget) ? viewerCesiumWidget.cesiumWidget : viewerCesiumWidget;
+	        var cesiumWidget = Cesium.defined(viewerCesiumWidget.cesiumWidget) ? viewerCesiumWidget.cesiumWidget : viewerCesiumWidget;
 
 	        var container = document.createElement('div');
-	        container.className = 'cesium-widget-cesiumQueryContainer';
+	        container.className = 'sasmac-cesium-widget-QueryContainer';
 	        cesiumWidget.container.appendChild(container);
 
 	        this.terria = viewerCesiumWidget;
@@ -91,12 +83,11 @@ define('sasmactools',[
 	        this.container = container;
 	        
 	   
-	        
-	           
+	       	           
 	          // Register custom Knockout.js bindings.  If you're not using the TerriaJS user interface, you can remove this.
 	       // registerKnockoutBindings();
 
-	        if (defined(this.terria.options.enableQuery) || this.terria.options.enableQuery)
+	        if (Cesium.defined(this.terria.options.enableQuery) || this.terria.options.enableQuery)
 	        {
 	            this.QueryDiv = document.createElement('div');
 	             container.appendChild(this.QueryDiv);

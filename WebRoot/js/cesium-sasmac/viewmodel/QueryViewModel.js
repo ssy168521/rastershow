@@ -1,29 +1,11 @@
 /*global define*/
 define([
     'Cesium/Core/defined',
-    'Cesium/Core/Math',
-    'Cesium/Core/getTimestamp',
     'Cesium/Core/EventHelper',
-    'Cesium/Core/Transforms',
-    'Cesium/Scene/SceneMode',
-    'Cesium/Core/Cartesian2',
-    'Cesium/Core/Cartesian3',
-    'Cesium/Core/Matrix4',
-    'Cesium/Core/BoundingSphere',
-    'Cesium/Core/HeadingPitchRange',
-    'Knockout',
+    'Knockout'
 ], function (
         defined,
-        CesiumMath,
-        getTimestamp,
         EventHelper,
-        Transforms,
-        SceneMode,
-        Cartesian2,
-        Cartesian3,
-        Matrix4,
-        BoundingSphere,
-        HeadingPitchRange,
         Knockout
        )
 {
@@ -34,46 +16,21 @@ define([
 
         this.terria = options.terria;
         this.eventHelper = new EventHelper();
-        this.enableZoomControls =  (defined(options.enableZoomControls))?options.enableZoomControls:true;   
-        this.enableCompass = (defined(options.enableCompass))?options.enableCompass:true; 
+        this.enableQuery = (defined(options.enableQuery))?options.enableQuery:true; 
 
-       // if (this.showZoomControls)
-     //   {
             this.controls = options.controls;
             if (!defined(this.controls))
             {
                 this.controls = [
-                    new ZoomNavigationControl(this.terria, true),
-                    new ResetViewNavigationControl(this.terria),
-                    new ZoomNavigationControl(this.terria, false)
+                    new sasmacQueryControl(this.terria, true),
+                   
                 ];
             }
-        //}
 
-  
 
-        this.showCompass = defined(this.terria) && this.enableCompass;
-        this.heading = this.showCompass ? this.terria.scene.camera.heading : 0.0;
+ 
 
-        this.isOrbiting = false;
-        this.orbitCursorAngle = 0;
-        this.orbitCursorOpacity = 0.0;
-        this.orbitLastTimestamp = 0;
-        this.orbitFrame = undefined;
-        this.orbitIsLook = false;
-        this.orbitMouseMoveFunction = undefined;
-        this.orbitMouseUpFunction = undefined;
-
-        this.isRotating = false;
-        this.rotateInitialCursorAngle = undefined;
-        this.rotateFrame = undefined;
-        this.rotateIsLook = false;
-        this.rotateMouseMoveFunction = undefined;
-        this.rotateMouseUpFunction = undefined;
-
-        this._unsubcribeFromPostRender = undefined;
-
-        Knockout.track(this, ['controls', 'showCompass', 'heading', 'isOrbiting', 'orbitCursorAngle', 'isRotating']);
+        Knockout.track(this, ['controls', enableQuery]);
 
         var that = this;
 
@@ -81,18 +38,7 @@ define([
         {
             if (defined(that.terria))
             {
-                if (that._unsubcribeFromPostRender)
-                {
-                    that._unsubcribeFromPostRender();
-                    that._unsubcribeFromPostRender = undefined;
-                }
-
-                that.showCompass = true && that.enableCompass;
-
-                that._unsubcribeFromPostRender = that.terria.scene.postRender.addEventListener(function ()
-                {
-                    that.heading = that.terria.scene.camera.heading;
-                });
+               
             }
             else
             {
@@ -101,7 +47,7 @@ define([
                     that._unsubcribeFromPostRender();
                     that._unsubcribeFromPostRender = undefined;
                 }
-                that.showCompass = false;
+             
             }
         }
 
@@ -181,25 +127,18 @@ define([
         return (control === this.controls[this.controls.length - 1]);
     };
 
-    var vectorScratch = new Cartesian2();
+
 
     QueryViewModel.prototype.handleMouseDown = function (viewModel, e)
     {
-        var scene = this.terria.scene;
-        if (scene.mode === SceneMode.MORPHING)
-        {
-            return true;
-        }
-
+       
 
     };
 
 
     QueryViewModel.create = function (options)
     {
-        //options.enableZoomControls = this.enableZoomControls;
-        //options.enableCompass = this.enableCompass;
-        var result = new NavigationViewModel(options);
+        var result = new QueryViewModel(options);
         result.show(options.container);
         return result;
     };

@@ -12,8 +12,20 @@
 	width:100%;
 	height:100%;
 }
-.cesium-widget-cesiumQueryContainer
-{
-	width:100%;
-	height:100%;
+
+.sasmac-cesium-widget-QueryContainer {
+    //.floating-vertical;
+    position: absolute; 
+    right: 30px;
+    top: 210px;
+    width: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    font-weight: 300;
+    // avoids selection of text with rapid zooming
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

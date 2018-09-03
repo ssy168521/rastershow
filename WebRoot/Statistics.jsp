@@ -42,13 +42,15 @@ html, body, #cesiumContainer {
 }
 </style>
 
+<!-- <script src="./lib/requirejs-2.1.20/require.js" data-main="./cesium-sasmac-startup.js"></script> -->
+<script src="./lib/requirejs-2.1.20/require.js"></script>
 <script src="./lib/jquery-3.2.0.js"></script>
 <script src="./lib/jquery-3.2.0.min.js"></script>
-<script src="./lib/bootstrap/js/bootstrap.js"></script>
+<!-- <script src="./lib/bootstrap/js/bootstrap.js"></script>
 <script src="./lib/bootstrap.offcanvas/js/bootstrap.offcanvas.js"></script>
 <script src="./lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="./lib/My97DatePicker/WdatePicker.js"></script>
-<script src="./lib/Cesium-1.4.8/Cesium.js"></script>
+<script src="./lib/Cesium-1.4.8/Cesium.js"></script> -->
 </head>
 
 <body>
@@ -182,8 +184,9 @@ html, body, #cesiumContainer {
 	</div>
 
 
-
-	<script>
+<script>
+	require(["./lib/Cesium-1.4.8/Cesium","./js/cesium-sasmac/viewerCesiumQueryMixin"],function(Cesium,viewerCesiumQueryMixin){
+	
 		var viewer = new Cesium.Viewer('cesiumContainer',{
 		//geocoder:false,
 		//homeButton:false,
@@ -196,6 +199,11 @@ html, body, #cesiumContainer {
 		vrButton:false
 		});
 		viewer._cesiumWidget._creditContainer.style.display="none";
+	    viewer.extend(QueryMixin,{});
+	
+	});
+
+
 		
 	</script>
 	<script type="text/javascript">
